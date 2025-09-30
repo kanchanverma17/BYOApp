@@ -7,15 +7,45 @@
 
 import SwiftUI
 
+enum NavigationDestinations: Hashable {
+       case detail(item: String)
+       case settings
+   }
+
+
+
 struct ContentView: View {
-    var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+    @State  var path = NavigationPath()
+        var body: some View {
+            NavigationStack(path: $path){
+            VStack {
+                Button("Custom Button") {
+                    print("Explore Templates")
+                }
+                .padding()
+                .background(.blue)
+                .foregroundColor(.white)
+                .cornerRadius(10)
+                Button {
+                    path.append("NewView")
+                                } label: {
+                                    Text("Pick a theme")
+                                }
+                   
+                
+                .padding()
+                .background(.blue)
+                .foregroundColor(.white)
+                .cornerRadius(10)
+                
+            }
+            .padding()
+            .navigationDestination(for: String.self) { view in
+                           if view == "NewView" {
+                              ColorGrid()
+                           }
+                       }
         }
-        .padding()
     }
 }
 
