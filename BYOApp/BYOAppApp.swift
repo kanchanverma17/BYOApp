@@ -9,6 +9,8 @@ import SwiftUI
 
 @main
 struct BYOAppApp: App {
+    @State var path = NavigationPath()
+    
     var body: some Scene {
         WindowGroup {
             ContentView()
