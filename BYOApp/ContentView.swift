@@ -42,7 +42,7 @@ struct ContentView: View {
             .padding()
             .navigationDestination(for: String.self) { view in
                            if view == "NewView" {
-                              ColorGrid()
+                               ColorGrid(selectedThemeGiven: ThemeCombination.taupeCombo)
                            }
                        }
         }
