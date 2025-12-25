@@ -17,13 +17,14 @@ struct ColorGrid: View {
     }
     
     var body: some View {
-      List(ThemeCombination.allCases, id: \.self) { colorVal in
+      List(ThemeCombination.allCases, id: \.self, selection: $selectedTheme) { colorVal in
           
           CellView(colorCombination: colorVal, isCustom: $isCustom)
           
       }
       .listRowSpacing(CGFloat(8))
         HStack {
+            Spacer()
             Button("Done") {
                 print("Explore Templates")
             }
@@ -32,6 +33,7 @@ struct ColorGrid: View {
             .foregroundColor(selectedTheme?.color.text)
             .cornerRadius(10)
             
+            Spacer()
             
             Button("Custom") {
                 isCustom.toggle()
@@ -40,10 +42,10 @@ struct ColorGrid: View {
             .background(selectedTheme?.color.background)
             .foregroundColor(selectedTheme?.color.text)
             .cornerRadius(10)
+            Spacer()
            
         }.frame(height: 80)
        
-        
         .navigationBarTitle("Selet a theme")
     }
     
@@ -54,40 +56,48 @@ struct CellView: View {
     @State var colorCombination: ThemeCombination
     @Binding var isCustom: Bool
     var body: some View {
-        VStack {
+        VStack(spacing: 8) {
             Text(isCustom ? "" : colorCombination.colorName)
-                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
+                .frame(maxWidth: .infinity, maxHeight: isCustom ? 0 : .infinity, alignment: .leading)
 
             HStack(spacing: 50){
                 Button("") {
-                    print("Explore \(colorCombination.colorName)")
+                    print("Explore \(colorCombination.color.background)")
                 }
                 .padding()
                 .background(colorCombination.color.background)
-                .foregroundColor(.white)
+                .foregroundColor(.clear)
                 .cornerRadius(10)
                 .frame(width: 25, height: 25, alignment: .leading)
+                .buttonStyle(BorderlessButtonStyle())
+                .tag(5)
                
                 Button("") {
-                    print("Explore \(colorCombination.colorName)")
+                    print("Explore \(colorCombination.color.text)")
                 }
                 .padding()
                 .background(colorCombination.color.text)
-                .foregroundColor(.white)
+                .foregroundColor(.clear)
                 .cornerRadius(10)
                 .frame(width: 25, height: 25, alignment: .leading)
+                .buttonStyle(BorderlessButtonStyle())
+                .tag(3)
                 
                 Button("") {
-                    print("Explore \(colorCombination.colorName)")
+                    print("Explore \(colorCombination.color.foreground)")
                 }
                 .padding()
                 .background(colorCombination.color.foreground)
-                .foregroundColor(.white)
+                .foregroundColor(.clear)
                 .cornerRadius(10)
                 .frame(width: 25, height: 25, alignment: .leading)
+                .buttonStyle(PlainButtonStyle())
+                .tag(4)
+                .contentShape(Rectangle())
                
             }.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
-        }.lineSpacing(CGFloat(5))
+                .zIndex(10)
+        }
         
     }
     
