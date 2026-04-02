@@ -34,7 +34,7 @@ public enum ThemeCombination: CaseIterable {
         case .dessertDuskCombo:
             return ComboColor(background: Color(hex: 0x5C4E4E), text: Color(hex: 0xD1D0D0), foreground: Color(hex: 0x988686))
         case .forrestCombo:
-            return ComboColor(background: Color(hex: 0x5C4E4E), text: Color(hex: 0xD1D0D0), foreground: Color(hex: 0x988686))
+            return ComboColor(background: Color(hex: 0x253D2C), text: Color(hex: 0xCFFFDC), foreground: Color(hex: 0x2E6F40))
         case .guavaCombo:
             return ComboColor(background: Color(hex: 0xCF5376), text: Color(hex: 0xFFB578), foreground: Color(hex: 0xFF8559))
         case .hydrangeaCombo:

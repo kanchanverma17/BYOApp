@@ -22,6 +22,7 @@ struct ColorGrid: View {
           CellView(colorCombination: colorVal, isCustom: $isCustom)
           
       }
+      .accessibilityRespondsToUserInteraction(false)
       .listRowSpacing(CGFloat(8))
         HStack {
             Spacer()
@@ -45,6 +46,10 @@ struct ColorGrid: View {
             Spacer()
            
         }.frame(height: 80)
+        
+            .onChange(of: selectedTheme) { theme in
+                print("Selected Theme: \(theme?.colorName ?? "None")")
+            }
        
         .navigationBarTitle("Selet a theme")
     }
@@ -55,6 +60,7 @@ struct ColorGrid: View {
 struct CellView: View {
     @State var colorCombination: ThemeCombination
     @Binding var isCustom: Bool
+    @State private var message = "Tap the box"
     var body: some View {
         VStack(spacing: 8) {
             Text(isCustom ? "" : colorCombination.colorName)
@@ -71,6 +77,14 @@ struct CellView: View {
                 .frame(width: 25, height: 25, alignment: .leading)
                 .buttonStyle(BorderlessButtonStyle())
                 .tag(5)
+                .accessibilityRespondsToUserInteraction(true)
+                .gesture(
+                    TapGesture()
+                        .onEnded {
+                            message = "Tap detected"
+                            print("Explore \(colorCombination.color.background)")
+                        }
+                )
                
                 Button("") {
                     print("Explore \(colorCombination.color.text)")
@@ -82,6 +96,13 @@ struct CellView: View {
                 .frame(width: 25, height: 25, alignment: .leading)
                 .buttonStyle(BorderlessButtonStyle())
                 .tag(3)
+                .gesture(
+                    TapGesture()
+                        .onEnded {
+                            message = "Tap detected"
+                            print("Explore \(colorCombination.color.text)")
+                        }
+                )
                 
                 Button("") {
                     print("Explore \(colorCombination.color.foreground)")
@@ -93,10 +114,15 @@ struct CellView: View {
                 .frame(width: 25, height: 25, alignment: .leading)
                 .buttonStyle(PlainButtonStyle())
                 .tag(4)
-                .contentShape(Rectangle())
+                .gesture(
+                    TapGesture()
+                        .onEnded {
+                            message = "Tap detected"
+                            print("Explore \(colorCombination.color.foreground)")
+                        }
+                )
                
             }.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
-                .zIndex(10)
         }
         
     }
